@@ -44,15 +44,14 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
 .hero-badge.highlight{background:#fff;color:#cc0000}
 
 /* ── MARCAS BAND ── */
-.brands-band{background:#fff;padding:14px 0;border-bottom:3px solid #cc0000}
-.brands-inner{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
-.brands-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#888}
-.brand-chip{display:flex;align-items:center;height:44px;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.brand-chip img{height:44px;object-fit:contain}
-/* fallback chips */
-.chip-la{background:#cc0000;padding:0 16px;font-size:18px;font-weight:900;color:#fff;font-style:italic;height:44px;display:flex;align-items:center}
-.chip-lev-r{background:#cc0000;padding:0 10px;font-size:16px;font-weight:900;color:#fff;height:44px;display:flex;align-items:center}
-.chip-lev-b{background:#1a2b6b;padding:0 10px;font-size:16px;font-weight:700;color:#fff;height:44px;display:flex;align-items:center}
+.brands-band{background:#fff;padding:32px 0;border-bottom:3px solid #cc0000}
+.brands-band-title{text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:#cc0000;margin-bottom:6px}
+.brands-band-sub{text-align:center;font-size:20px;font-weight:800;color:#1a1a1a;margin-bottom:24px}
+.brands-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:16px;max-width:900px;margin:0 auto}
+.brand-chip{display:flex;align-items:center;justify-content:center;height:80px;border-radius:10px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.1);background:#f9f9f9;transition:transform .2s,box-shadow .2s;padding:10px}
+.brand-chip:hover{transform:translateY(-4px);box-shadow:0 10px 22px rgba(0,0,0,.15)}
+.brand-chip img{max-height:60px;max-width:110px;object-fit:contain;display:block}
+.brand-chip-placeholder{font-size:12px;font-weight:700;color:#aaa;text-align:center;padding:8px}
 
 /* ── FILTROS ── */
 .filters-section{background:#fff;border-bottom:2px solid #eee;padding:12px 0;position:sticky;top:68px;z-index:150;box-shadow:0 2px 6px rgba(0,0,0,.06)}
@@ -256,22 +255,21 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
       <div class="header-inner">
         <div class="brand-left">
           <div class="levapar-logo">
-            <span class="levapar-name">LEVAPAR</span>
-            <span class="levapar-sub">Sistema de Preventa</span>
+            <!-- ========================================== -->
+            <!-- 👇 REEMPLAZÁ LA URL DEL LOGO AQUÍ ABAJO  -->
+            <!-- ========================================== -->
+            <img src="LOGO LEVAPAR S.A. (blanco).png"
+                 alt="Levapar S.A."
+                 style="height:64px;object-fit:contain;"
+                 onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+            <!-- Texto de respaldo si la imagen no carga -->
+            <div id="logoFallback" style="display:none;flex-direction:column">
+              <span class="levapar-name">LEVAPAR</span>
+              <span class="levapar-sub">Levaduras Paraguayas S.A.</span>
+            </div>
           </div>
           <div class="divider-v"></div>
-          <div class="brand-logos">
-            <!-- Logo La Suiza -->
-            <div class="brand-logo-pill">
-              <img src="" alt="La Suiza" id="imgLaSuiza" style="display:none" onerror="this.style.display='none';document.getElementById('fbLaSuiza').style.display='flex'">
-              <span id="fbLaSuiza" class="logo-txt-la">La Suiza</span>
-            </div>
-            <!-- Logo Levuferm -->
-            <div class="brand-logo-pill levu">
-              <img src="" alt="Levuferm" id="imgLevuferm" style="display:none" onerror="this.style.display='none';document.getElementById('fbLevuferm').style.display='flex'">
-              <span id="fbLevuferm" class="logo-txt-lev" style="display:flex">Levuferm</span>
-            </div>
-          </div>
+
         </div>
         <button class="cart-btn" onclick="openCart()">
           🛒 Mi Pedido <span class="cart-badge" id="cartCount">0</span>
@@ -366,17 +364,99 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
   </div>
 </section>
 
+<section class="how-section">
+  <div class="container">
+    <p class="how-title">Guía de compra</p>
+    <h2 class="how-subtitle">¿Cómo hacer tu preventa?</h2>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">1</div><div class="step-icon">🔍</div><h3>Buscá tu artículo</h3><p>Usá los filtros por familia o el buscador para encontrar lo que necesitás.</p></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-icon">🛒</div><h3>Elegí la cantidad</h3><p>Indicá cuántas unidades necesitás y presioná <strong>Agregar al pedido</strong>.</p></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-icon">📋</div><h3>Revisá tu pedido</h3><p>Tocá <strong>Mi Pedido</strong> para ver y editar todos los artículos elegidos.</p></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-icon">📍</div><h3>Completá tus datos</h3><p>Ingresá nombre, dirección y marcá tu ubicación exacta en el mapa.</p></div>
+      <div class="step-card"><div class="step-num">5</div><div class="step-icon">📲</div><h3>Enviá por WhatsApp</h3><p>Un clic y tu pedido llega a nuestro equipo. ¡Coordinamos la entrega!</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- BANDA DE MARCAS -->
 <div class="brands-band">
   <div class="container">
-    <div class="brands-inner">
-      <span class="brands-label">Nuestras marcas</span>
+    <p class="brands-band-title">Distribuimos</p>
+    <h2 class="brands-band-sub">Nuestras Marcas</h2>
+    <div class="brands-grid">
+
+      <!-- ======================================= -->
+      <!-- LOGO 1 - reemplazá el src              -->
+      <!-- ======================================= -->
       <div class="brand-chip">
-        <div class="chip-la">La</div><div class="chip-lev-b" style="background:#1a1a1a;font-style:italic">Suiza</div>
+        <img src="La suiza (1).png" alt="Marca 1"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 1</span>'">
       </div>
+
+      <!-- ======================================= -->
+      <!-- LOGO 2 - reemplazá el src              -->
+      <!-- ======================================= -->
       <div class="brand-chip">
-        <div class="chip-lev-r">Levu</div><div class="chip-lev-b">ferm</div>
+        <img src="Levufert png.png" alt="Marca 2"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 2</span>'">
       </div>
+
+      <!-- ======================================= -->
+      <!-- LOGO 3 - reemplazá el src              -->
+      <!-- ======================================= -->
+      <div class="brand-chip">
+        <img src="HARAL.webp" alt="Marca 3"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 3</span>'">
+      </div>
+
+      <!-- ======================================= -->
+      <!-- LOGO 4 - reemplazá el src              -->
+      <!-- ======================================= -->
+      <div class="brand-chip">
+        <img src="parmalat.png" alt="Marca 4"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 4</span>'">
+      </div>
+
+      <!-- ======================================= -->
+      <!-- LOGO 5 - reemplazá el src              -->
+      <!-- ======================================= -->
+      <div class="brand-chip">
+        <img src="codipsa.svg" alt="Marca 5"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 5</span>'">
+      </div>
+
+      <!-- ======================================= -->
+      <!-- LOGO 6 - reemplazá el src              -->
+      <!-- ======================================= -->
+      <div class="brand-chip">
+        <img src="LOGO LEFRUT.png" alt="Marca 6"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 6</span>'">
+      </div>
+
+      <!-- ======================================= -->
+      <!-- LOGO 7 - reemplazá el src              -->
+      <!-- ======================================= -->
+      <div class="brand-chip">
+        <img src="DAUS.png" alt="Marca 7"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 7</span>'">
+      </div>
+
+      <!-- ======================================= -->
+      <!-- LOGO 8 - reemplazá el src              -->
+      <!-- ======================================= -->
+      <div class="brand-chip">
+        <img src="CUKIN.png" alt="Marca 8"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 8</span>'">
+      </div>
+
+      <!-- ======================================= -->
+      <!-- LOGO 9 - reemplazá el src              -->
+      <!-- ======================================= -->
+      <div class="brand-chip">
+        <img src="SOYA.png" alt="Marca 9"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 9</span>'">
+      </div>
+
     </div>
   </div>
 </div>
@@ -414,53 +494,23 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
 </section>
 
 <!-- SECCIÓN CÓMO COMPRAR + FOOTER -->
-<section class="how-section">
-  <div class="container">
-    <p class="how-title">Guía de compra</p>
-    <h2 class="how-subtitle">¿Cómo hacer tu preventa?</h2>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <div class="step-icon">🔍</div>
-        <h3>Buscá tu artículo</h3>
-        <p>Usá los filtros por familia o el buscador para encontrar lo que necesitás.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <div class="step-icon">🛒</div>
-        <h3>Elegí la cantidad</h3>
-        <p>Indicá cuántas unidades necesitás y presioná <strong>Agregar al pedido</strong>.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-icon">📋</div>
-        <h3>Revisá tu pedido</h3>
-        <p>Tocá <strong>Mi Pedido</strong> para ver y editar todos los artículos elegidos.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <div class="step-icon">📍</div>
-        <h3>Completá tus datos</h3>
-        <p>Ingresá nombre, dirección y marcá tu ubicación exacta en el mapa.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">5</div>
-        <div class="step-icon">📲</div>
-        <h3>Enviá por WhatsApp</h3>
-        <p>Un clic y tu pedido llega a nuestro equipo. ¡Coordinamos la entrega!</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <footer class="site-footer">
   <!-- Banda superior roja con logo y redes -->
   <div class="footer-top">
     <div class="container">
       <div class="footer-top-inner">
         <div class="footer-brand">
-          <span class="footer-brand-name">LEVAPAR</span>
-          <span class="footer-brand-sub">Insumos para panadería</span>
+          <!-- ========================================== -->
+          <!-- 👇 REEMPLAZÁ LA URL DEL LOGO AQUÍ ABAJO  -->
+          <!-- ========================================== -->
+          <img src="PEGA_AQUI_EL_LINK_DEL_LOGO.png"
+               alt="Levapar S.A."
+               style="height:70px;object-fit:contain;filter:brightness(0) invert(1);"
+               onerror="this.style.display='none';document.getElementById('footerLogoFallback').style.display='flex'">
+          <div id="footerLogoFallback" style="display:none;flex-direction:column">
+            <span class="footer-brand-name">LEVAPAR</span>
+            <span class="footer-brand-sub">Levaduras Paraguayas S.A.</span>
+          </div>
         </div>
         <div class="footer-social-row">
           <a class="social-pill wa" href="https://wa.me/595976659277" target="_blank">
