@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recetas – Levapar S.A.</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f9f9f9;color:#1a1a1a}
+a{text-decoration:none}
+
+/* ── HEADER ── */
+header{background:#cc0000;background:linear-gradient(135deg,#cc0000 0%,#990000 100%);position:sticky;top:0;z-index:200;box-shadow:0 3px 12px rgba(0,0,0,.25)}
+.header-top{padding:12px 0}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand-left{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.levapar-logo{display:flex;align-items:center}
+.levapar-name{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px}
+.levapar-sub{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:1px;text-transform:uppercase}
+.divider-v{width:1px;height:42px;background:rgba(255,255,255,.3);margin-left:4px}
+
+/* NAV inline */
+.header-nav-inline{display:flex;align-items:center;gap:0;flex:1;justify-content:center}
+.nav-link{color:rgba(255,255,255,.85);text-decoration:none;font-size:13px;font-weight:600;padding:9px 18px;letter-spacing:.4px;text-transform:uppercase;transition:all .2s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;border-radius:6px}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.15)}
+.nav-link.active-page{color:#fff;background:rgba(255,255,255,.18);font-weight:700}
+
+.back-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:9px 18px;border-radius:22px;font-size:13px;font-weight:600;transition:all .2s;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.back-btn:hover{background:rgba(255,255,255,.28)}
+
+@media(max-width:768px){.header-nav-inline{display:none}}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#7a0000 0%,#cc0000 60%,#ff4444 100%);padding:52px 0 44px;text-align:center;color:#fff}
+.hero-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;opacity:.8;margin-bottom:10px}
+.hero h1{font-size:36px;font-weight:900;margin-bottom:10px;line-height:1.2}
+.hero p{font-size:15px;opacity:.85;max-width:520px;margin:0 auto}
+@media(max-width:600px){.hero h1{font-size:26px}}
+
+/* ── FILTROS ── */
+.filters-bar{background:#fff;border-bottom:1px solid #eee;padding:16px 0;position:sticky;top:82px;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.filters-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-right:4px;white-space:nowrap}
+.fcat-btn{border:2px solid #e0e0e0;background:#fff;color:#555;padding:7px 16px;border-radius:22px;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
+.fcat-btn:hover{border-color:#cc0000;color:#cc0000}
+.fcat-btn.active{background:#cc0000;color:#fff;border-color:#cc0000}
+.search-recipes{margin-left:auto;border:2px solid #e0e0e0;border-radius:22px;padding:7px 14px;font-size:13px;outline:none;transition:border-color .2s;min-width:180px}
+.search-recipes:focus{border-color:#cc0000}
+@media(max-width:600px){.search-recipes{min-width:100%;margin-left:0}}
+
+/* ── GRID DE RECETAS ── */
+.recipes-main{padding:40px 0 60px}
+.recipes-count{font-size:13px;color:#888;margin-bottom:20px}
+.recipes-count span{color:#cc0000;font-weight:700}
+.recipes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+@media(max-width:480px){.recipes-grid{grid-template-columns:1fr}}
+
+.recipe-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.07);transition:transform .2s,box-shadow .2s;cursor:pointer;border-top:3px solid #cc0000;display:flex;flex-direction:column}
+.recipe-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,.13)}
+.recipe-card-thumb{height:170px;display:flex;align-items:center;justify-content:center;font-size:60px;background:linear-gradient(135deg,#fff5f0,#ffe8e8)}
+.recipe-card-body{padding:18px;flex:1;display:flex;flex-direction:column}
+.recipe-cat-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:4px;margin-bottom:10px;background:#fff0f0;color:#cc0000}
+.recipe-card-title{font-size:16px;font-weight:800;color:#1a1a1a;margin-bottom:7px;line-height:1.3}
+.recipe-card-desc{font-size:12px;color:#666;line-height:1.6;margin-bottom:14px;flex:1}
+.recipe-card-meta{display:flex;gap:12px;font-size:11px;color:#999;border-top:1px solid #f0f0f0;padding-top:12px;margin-top:auto}
+.recipe-card-meta span{display:flex;align-items:center;gap:4px}
+.recipe-card-cta{display:block;text-align:center;background:#cc0000;color:#fff;padding:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:background .15s;width:100%;margin-top:12px;border-radius:0 0 11px 11px;margin:-18px -18px -18px;width:calc(100% + 0px)}
+.recipe-card-cta:hover{background:#aa0000}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:#aaa}
+.empty-state .es-icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:14px}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.active{display:flex}
+.modal-box{background:#fff;border-radius:16px;width:100%;max-width:700px;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid #f0f0f0;background:#fff;position:sticky;top:0;z-index:1;flex-shrink:0}
+.modal-header h2{font-size:17px;font-weight:800;color:#1a1a1a;line-height:1.3}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#999;padding:4px 8px;border-radius:6px;transition:all .15s;line-height:1}
+.modal-close:hover{background:#f5f5f5;color:#333}
+.modal-body{overflow-y:auto;flex:1}
+.modal-thumb{height:180px;display:flex;align-items:center;justify-content:center;font-size:70px;background:linear-gradient(135deg,#fff5f0,#ffe0e0);flex-shrink:0}
+.modal-content{padding:22px 24px 28px}
+.modal-desc{font-size:13px;color:#555;line-height:1.7;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #f0f0f0}
+.modal-meta-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.modal-meta-pill{background:#f8f8f8;border:1px solid #eee;border-radius:8px;padding:8px 14px;font-size:12px;color:#555;display:flex;align-items:center;gap:6px}
+.modal-meta-pill strong{color:#1a1a1a;font-weight:700}
+.modal-sections{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+@media(max-width:500px){.modal-sections{grid-template-columns:1fr}}
+.modal-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#cc0000;border-left:3px solid #cc0000;padding-left:9px;margin-bottom:12px}
+.ingredients-list{list-style:none;padding:0}
+.ingredients-list li{font-size:12px;color:#444;padding:6px 0;border-bottom:1px dashed #eee;display:flex;align-items:baseline;gap:8px;line-height:1.4}
+.ingredients-list li::before{content:'•';color:#cc0000;font-weight:700;flex-shrink:0}
+.steps-list{list-style:none;padding:0;counter-reset:steps}
+.steps-list li{font-size:12px;color:#444;padding:8px 0 8px 30px;border-bottom:1px dashed #eee;position:relative;counter-increment:steps;line-height:1.55}
+.steps-list li::before{content:counter(steps);position:absolute;left:0;top:8px;width:20px;height:20px;background:#cc0000;color:#fff;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.prods-note{background:#fff5f5;border:1px solid #ffcccc;border-radius:8px;padding:13px 16px;font-size:12px;color:#cc0000;line-height:1.6}
+.prods-note strong{font-weight:700;display:block;margin-bottom:4px}
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.btn-wa{flex:1;background:#25d366;color:#fff;border:none;border-radius:8px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s}
+.btn-wa:hover{background:#1da851}
+.btn-close-modal{background:#f0f0f0;color:#555;border:none;border-radius:8px;padding:12px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-close-modal:hover{background:#e0e0e0}
+
+/* ── FOOTER ── */
+.site-footer-mini{background:#1a1a1a;color:rgba(255,255,255,.6);text-align:center;padding:22px;font-size:12px}
+.site-footer-mini span{color:#cc0000;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- LOGO -->
+        <div class="brand-left">
+          <div class="levapar-logo">
+            <img src="LOGO LEVAPAR S.A. (blanco).png" alt="Levapar" style="height:58px;object-fit:contain"
+                 onerror="this.style.display='none';document.getElementById('logoFb').style.display='flex'">
+            <div id="logoFb" style="display:none;flex-direction:column">
+              <span class="levapar-name">LEVAPAR</span>
+              <span class="levapar-sub">Levaduras Paraguayas S.A.</span>
+            </div>
+          </div>
+          <div class="divider-v"></div>
+        </div>
+
+        <!-- NAV INLINE -->
+        <nav class="header-nav-inline">
+          <a class="nav-link" href="index.html"> Productos</a>
+          <a class="nav-link active-page" href="recetas.html"> Recetas</a>
+          <a class="nav-link" href="index.html#contacto-footer"> Contacto</a>
+        </nav>
+
+        <!-- VOLVER -->
+        <a class="back-btn" href="index.html">← Volver a Preventa</a>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-tag">🍽️ Inspirate en la cocina</div>
+    <h1>Recetas con productos Levapar</h1>
+    <p>Descubrí preparaciones tradicionales y modernas usando los ingredientes que distribuimos en todo el Paraguay</p>
+  </div>
+</div>
+
+<!-- FILTROS -->
+<div class="filters-bar">
+  <div class="container">
+    <div class="filters-inner">
+      <span class="filter-label">Filtrar:</span>
+      <button class="fcat-btn active" onclick="setFilter('TODOS',this)">Todas</button>
+      <button class="fcat-btn" onclick="setFilter('PANADERÍA',this)">🍞 Panadería</button>
+      <button class="fcat-btn" onclick="setFilter('CHIPERÍA',this)">🧀 Chipería</button>
+      <button class="fcat-btn" onclick="setFilter('REPOSTERÍA',this)">🎂 Repostería</button>
+      <button class="fcat-btn" onclick="setFilter('GALLETAS',this)">🍪 Galletas</button>
+      <input class="search-recipes" id="searchBox" type="text" placeholder="🔍 Buscar receta..." oninput="renderRecipes()">
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="recipes-main">
+  <div class="container">
+    <div class="recipes-count" id="recipesCount"></div>
+    <div class="recipes-grid" id="recipesGrid"></div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="recipeModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 id="modalTitle">Receta</h2>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-thumb" id="modalThumb">🍞</div>
+      <div class="modal-content">
+        <div class="modal-meta-row" id="modalMeta"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-sections">
+          <div>
+            <div class="modal-section-title">Ingredientes</div>
+            <ul class="ingredients-list" id="modalIngredients"></ul>
+          </div>
+          <div>
+            <div class="modal-section-title">Preparación</div>
+            <ol class="steps-list" id="modalSteps"></ol>
+          </div>
+        </div>
+        <div class="prods-note" id="modalProds"></div>
+        <div class="modal-actions">
+          <button class="btn-wa" onclick="pedirPorWA()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.115 1.523 5.845L0 24l6.345-1.489A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.015-1.378l-.36-.213-3.767.884.948-3.665-.234-.378A9.818 9.818 0 0 1 2.182 12c0-5.419 4.399-9.818 9.818-9.818 5.42 0 9.818 4.399 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+            Consultar ingredientes por WhatsApp
+          </button>
+          <button class="btn-close-modal" onclick="closeModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="site-footer-mini">
+  <p>© 2025 <span>Levapar S.A.</span> · Levaduras Paraguayas · Todos los derechos reservados</p>
+</div>
+
+<script>
+const RECETAS = [
+  {
+    id:1, cat:'CHIPERÍA', emoji:'🧀',
+    title:'Chipa Tradicional Paraguaya',
+    desc:'La chipa es el pan más emblemático del Paraguay, hecho con almidón de maíz y queso. Crujiente por fuera, suave y esponjosa por dentro, es el acompañamiento ideal para el tereré o el mate cocido.',
+    tiempo:'45 min', porciones:'20 chipas', dificultad:'Media',
+    ingredientes:['500 g almidón de maíz','200 g queso chipa o queso paraguay rallado','3 huevos','100 g grasa vacuna o manteca','1 taza leche tibia o infusión de anís','1 cdita sal','1 cdita polvo de hornear'],
+    pasos:['Mezclar el almidón con la sal y el polvo de hornear en un bol grande.','Agregar la grasa cortada en trozos y mezclar con las manos hasta obtener migas finas.','Incorporar el queso rallado y mezclar bien.','Agregar los huevos de a uno, mezclando entre cada incorporación.','Añadir la leche tibia (o la infusión de anís) de a poco hasta formar una masa suave, moldeable y no pegajosa.','Formar bollitos o argollas y colocar en placa ligeramente aceitada.','Hornear en horno precalentado a 200°C por 20-25 minutos hasta que estén dorados.'],
+    productos:'Almidón de maíz (PT065), Queso chipa en polvo (PT062), Polvo de hornear (PT010/PT011), Grasa vacuna (PT006), Anís en grano (PT042)'
+  },
+  {
+    id:2, cat:'PANADERÍA', emoji:'🥖',
+    title:'Pan Francés Crocante',
+    desc:'Pan de miga suave y corteza crocante, el clásico pan diario ideal para sándwiches o acompañar cualquier comida. Con el mejorador correcto, lográs una textura profesional en casa.',
+    tiempo:'3 horas', porciones:'8 panes', dificultad:'Alta',
+    ingredientes:['500 g harina 000','10 g levadura fresca','10 g sal','5 g azúcar','300 ml agua tibia','20 g mejorador para masas','30 ml aceite de girasol'],
+    pasos:['Disolver la levadura y el azúcar en el agua tibia. Dejar reposar 10 minutos hasta espumar.','Mezclar la harina con la sal y el mejorador en un bol. Hacer un hueco en el centro.','Volcar el líquido con levadura y el aceite. Integrar hasta obtener una masa.','Amasar sobre mesada enharinada por 10-12 minutos hasta lograr una masa lisa, suave y elástica.','Colocar en bol aceitado, cubrir y dejar leudar 1 hora en lugar cálido hasta doblar volumen.','Desgasificar, dividir en 8 porciones y formar los panes alargados. Colocar en placa.','Dejar leudar 45 minutos más tapados. Hacer cortes en la superficie con cuchillo afilado.','Hornear a 220°C con vapor los primeros 10 min (poner un recipiente con agua). Bajar a 200°C y hornear 15 min más.'],
+    productos:'Levadura fresca (PT001), Mejorador para masas (PT008/PT009), Esencia de manteca (PT015) para aroma extra'
+  },
+  {
+    id:3, cat:'GALLETAS', emoji:'🍪',
+    title:'Biscochos de Grasa',
+    desc:'Los clásicos biscochos paraguayos, crujientes, sabrosos y adictivos. Perfectos para el desayuno o la merienda, solos o con queso. La clave está en no amasar de más.',
+    tiempo:'40 min', porciones:'30 unidades', dificultad:'Fácil',
+    ingredientes:['500 g harina','150 g grasa vacuna','10 g polvo de hornear','10 g sal','1 huevo','150 ml agua tibia aprox.','Unas gotas de esencia de anís (opcional)'],
+    pasos:['Mezclar la harina con la sal y el polvo de hornear en un bol.','Incorporar la grasa fría cortada en trozos y mezclar con las manos hasta obtener un granulado fino (como arena gruesa).','Agregar el huevo batido y las gotas de esencia de anís.','Añadir el agua de a poco, mezclando hasta que la masa apenas se una. No amasar de más (esto los hace tiernos).','Estirar con palote sobre mesada enharinada a 1 cm de espesor.','Cortar con cortante redondo o con un vaso. Colocar en placa sin engrasar.','Hornear a 200°C por 18-20 minutos hasta que estén dorados.'],
+    productos:'Grasa vacuna (PT006), Polvo de hornear (PT010/PT011), Esencia de anís (PT017), Bicarbonato de sodio (PT070)'
+  },
+  {
+    id:4, cat:'REPOSTERÍA', emoji:'🎂',
+    title:'Torta Húmeda de Chocolate',
+    desc:'Una torta esponjosa, jugosa y con intenso sabor a chocolate. El truco del agua caliente al final es lo que la hace tan húmeda. Ideal para cumpleaños y cualquier celebración.',
+    tiempo:'1 hora', porciones:'12 porciones', dificultad:'Media',
+    ingredientes:['3 huevos','200 g azúcar','200 g harina','50 g chocolate en polvo 50%','1 cdita polvo de hornear','1 cdita bicarbonato de sodio','200 ml leche','100 ml aceite','1 cdita esencia de vainilla','200 ml agua caliente'],
+    pasos:['Batir los huevos con el azúcar a velocidad alta hasta que la mezcla blanquee y duplique volumen (5 minutos).','Tamizar juntos la harina, el chocolate en polvo, el polvo de hornear y el bicarbonato.','Incorporar los ingredientes secos al batido en 3 partes, alternando con la leche en 2 partes.','Agregar el aceite y la esencia de vainilla. Mezclar suavemente.','Por último, añadir el agua caliente en hilo fino y mezclar hasta integrar (la mezcla quedará bastante líquida, es normal).','Volcar en molde de 24 cm engrasado y enharinado.','Hornear a 180°C por 35-40 minutos. Verificar con palillo.','Dejar enfriar y cubrir con ganache o glasé a gusto.'],
+    productos:'Chocolate en polvo 50% (PT173), Polvo de hornear (PT011), Bicarbonato (PT070), Esencia de vainilla (PT019), Chips de chocolate (PT174) para decorar'
+  },
+  {
+    id:5, cat:'CHIPERÍA', emoji:'🫔',
+    title:'Chipa Guazú (Pastel de Choclo)',
+    desc:'Preparación tradicional paraguaya a base de choclo fresco, suave y sabrosa, perfecta como guarnición de asados y comidas familiares. Se sirve caliente, recién salida del horno.',
+    tiempo:'1 hora', porciones:'8 porciones', dificultad:'Fácil',
+    ingredientes:['6 choclos frescos grandes (o 500 g de granos)','3 huevos','200 g queso paraguay (o queso fresco)','100 g grasa vacuna o manteca blanda','200 ml leche','1 cdita sal','1 cdita azúcar'],
+    pasos:['Rallar los choclos en un bol grande o procesar los granos hasta obtener una pasta gruesa.','En otro bol, batir los huevos con la grasa blanda hasta integrar.','Combinar el choclo procesado con la mezcla de huevos.','Agregar la leche, el queso desmigado, la sal y el azúcar. Mezclar todo bien.','Volcar en una fuente para horno previamente enmantecada.','Hornear a 180°C por 40-45 minutos, hasta que esté firme al centro y dorado en la superficie.'],
+    productos:'Grasa vacuna (PT006), Queso chipa en polvo (PT062) para intensificar sabor, Almidón de maíz (PT065) para ajustar consistencia'
+  },
+  {
+    id:6, cat:'PANADERÍA', emoji:'🍞',
+    title:'Pan de Semillas Artesanal',
+    desc:'Pan artesanal enriquecido con sésamo, chía y lino, muy nutritivo, con sabor intenso y corteza crujiente. Ideal para una alimentación más consciente sin sacrificar el sabor.',
+    tiempo:'3:30 hs', porciones:'1 hogaza grande', dificultad:'Alta',
+    ingredientes:['500 g harina integral o mezcla (70% blanca + 30% integral)','10 g levadura fresca','10 g sal','30 g miel de abeja','300 ml agua tibia','50 g semillas de sésamo','30 g semillas de chía','30 g semillas de lino','30 ml aceite de oliva o girasol'],
+    pasos:['Disolver la levadura y la miel en el agua tibia. Reposar 10 minutos.','Mezclar la harina y la sal en bol. Agregar el líquido con levadura y el aceite.','Amasar 10 minutos hasta obtener masa lisa. En los últimos 2 minutos incorporar las semillas.','Colocar en bol aceitado, cubrir con film o repasador húmedo y leudar 1:30 hs.','Desgasificar, dar forma de hogaza y colocar en molde de budinera aceitado.','Leudar 45 minutos más tapado.','Pincelar la superficie con agua fría y espolvorear sésamo extra.','Hornear a 210°C por 35-40 minutos hasta que suene hueco al golpear la base.'],
+    productos:'Levadura fresca (PT001), Semillas de sésamo (PT052/PT053), Semillas de chía (PT157), Semillas de lino (PT055), Miel de abeja (PT079)'
+  },
+  {
+    id:7, cat:'REPOSTERÍA', emoji:'🍩',
+    title:'Buñuelos de Guayaba',
+    desc:'Deliciosos buñuelos fritos rellenos con dulce de guayaba, una combinación dulce y tradicional irresistible. El exterior dorado y crocante contrasta perfecto con el relleno cremoso.',
+    tiempo:'30 min', porciones:'15 unidades', dificultad:'Media',
+    ingredientes:['250 g almidón de mandioca','2 huevos','50 g azúcar impalpable','1 cdita polvo de hornear','Dulce de guayaba cantidad necesaria','Aceite para freír','Azúcar impalpable para espolvorear al servir'],
+    pasos:['Mezclar el almidón, el azúcar impalpable y el polvo de hornear en un bol.','Agregar los huevos y mezclar con las manos hasta obtener una masa moldeable (si está muy seca, agregar 1 cdita de leche).','Tomar porciones del tamaño de una nuez, aplanar con la palma.','Colocar una cucharadita de dulce de guayaba en el centro.','Cerrar bien la masa alrededor del relleno formando una bolita, sellando los bordes.','Calentar el aceite a 170°C. Freír las bolitas 3-4 minutos girándolas hasta que estén doradas por todos lados.','Escurrir sobre papel absorbente y espolvorear con azúcar impalpable. Servir tibios.'],
+    productos:'Almidón de mandioca (PT091), Polvo de hornear (PT011), Dulce de guayaba (PT066/PT067), Azúcar impalpable (PT060)'
+  },
+  {
+    id:8, cat:'GALLETAS', emoji:'🍪',
+    title:'Galletas de Coco y Vainilla',
+    desc:'Galletas crujientes y aromáticas con coco rallado y esencia de vainilla. Sencillas de preparar, perfectas para el desayuno, la merienda o para regalar en una cajita.',
+    tiempo:'35 min', porciones:'25 galletas', dificultad:'Fácil',
+    ingredientes:['300 g harina','150 g azúcar','150 g margarina blanda (temperatura ambiente)','1 huevo','1 cdita esencia de vainilla','100 g coco rallado','1 cdita polvo de hornear','Pizca de sal'],
+    pasos:['Batir la margarina con el azúcar hasta obtener una crema suave y clara (3 minutos con batidora).','Agregar el huevo y la esencia de vainilla. Batir hasta integrar.','Incorporar la harina tamizada junto con el polvo de hornear y la sal.','Agregar el coco rallado y mezclar con espátula o mano hasta unir.','Formar bolitas del tamaño de una nuez y colocar sobre placa enmantecada o con papel manteca.','Aplastar suavemente con los dedos o el fondo de un vaso.','Hornear a 180°C por 12-15 minutos hasta que los bordes estén dorados. El centro puede verse blando pero se endurece al enfriar.'],
+    productos:'Coco rallado (PT049), Esencia de vainilla (PT019), Polvo de hornear (PT011), Azúcar impalpable (PT060), Margarina Cukin (PT166)'
+  },
+  {
+    id:9, cat:'PANADERÍA', emoji:'🥐',
+    title:'Medialunas de Manteca',
+    desc:'Medialunas doradas, hojaldradas y con ese brillo característico del almíbar. Un clásico de las panaderías paraguayas que podés hacer en casa con paciencia y los ingredientes correctos.',
+    tiempo:'4 horas', porciones:'18 medialunas', dificultad:'Alta',
+    ingredientes:['500 g harina 000','10 g levadura fresca','80 g azúcar','8 g sal','2 huevos','150 ml leche tibia','200 g manteca fría para el laminado','30 g manteca blanda para la masa','1 cdita esencia de manteca'],
+    pasos:['Mezclar harina, azúcar y sal. Agregar levadura disuelta en leche tibia, los 2 huevos y la manteca blanda.','Amasar 8 minutos hasta masa lisa. Enfriar en heladera 30 minutos envuelta en film.','Estirar la masa en rectángulo. Colocar la manteca fría aplanada en el centro y envolver con la masa.','Dar 3 vueltas simples (estirar, doblar en 3), refrigerando 20 min entre cada vuelta.','Estirar a 4mm de grosor. Cortar triángulos y enrollar desde la base hacia la punta.','Colocar en placa, curvar las puntas y leudar 1:30 hs.','Pincelar con huevo y hornear a 200°C por 15-18 minutos.','Bañar con almíbar (200g azúcar + 150ml agua hervidos 5 min) apenas salen del horno.'],
+    productos:'Levadura fresca (PT001), Esencia de manteca (PT015), Mejorador para masas (PT008)'
+  },
+  {
+    id:10, cat:'REPOSTERÍA', emoji:'🍮',
+    title:'Budín de Pan con Pasas',
+    desc:'Receta de aprovechamiento clásica del Paraguay. Con pan del día anterior, leche, huevos y pasas, se obtiene un postre suave, aromático y delicioso que no deja desperdiciar nada.',
+    tiempo:'1:15 hs', porciones:'10 porciones', dificultad:'Fácil',
+    ingredientes:['400 g pan del día anterior en trozos','500 ml leche','3 huevos','150 g azúcar','100 g pasas de uva','1 cdita esencia de vainilla','1 cdita canela en polvo','50 g manteca derretida','Azúcar y manteca para el molde'],
+    pasos:['Remojar el pan en la leche tibia por 20 minutos hasta que ablande bien.','Aplastarlo con tenedor o mixer hasta obtener una pasta.','Batir los huevos con el azúcar. Incorporar a la mezcla de pan.','Agregar la manteca derretida, la esencia de vainilla, la canela y las pasas.','Mezclar bien. Volcar en molde enmantecado y azucarado.','Hornear a baño María a 180°C por 45-50 minutos hasta que al insertar palillo salga limpio.','Dejar enfriar y desmoldar. Servir con dulce de leche o salsa de caramelo.'],
+    productos:'Esencia de vainilla (PT019), Canela en polvo (PT044), Pasas de uva (PT047), Esencia de caramelo (PT020)'
+  },
+  {
+    id:11, cat:'CHIPERÍA', emoji:'🧆',
+    title:'Chipá So\'o (Chipa Rellena de Carne)',
+    desc:'Versión rellena de la chipa tradicional con una sabrosa mezcla de carne molida condimentada. Una bomba de sabor, perfecta para vender en kioscos o para llevar como snack.',
+    tiempo:'1:15 hs', porciones:'15 unidades', dificultad:'Media',
+    ingredientes:['400 g almidón de maíz','150 g queso rallado','2 huevos','80 g grasa vacuna','½ taza leche tibia','1 cdita sal','Para el relleno: 300 g carne molida, 1 cebolla, 1 morrón, sal, pimienta, comino'],
+    pasos:['Preparar el relleno: rehogar la cebolla y el morrón en aceite. Agregar la carne molida y cocinar hasta dorar. Condimentar con sal, pimienta y comino. Dejar enfriar.','Para la masa: mezclar almidón, sal, queso y grasa hasta obtener migas.','Agregar huevos y leche de a poco hasta formar masa suave.','Tomar porciones de masa, aplanar, poner 1 cda de relleno en el centro.','Cerrar bien la masa sellando los bordes y dar forma ovalada.','Colocar en placa aceitada y hornear a 200°C por 25-30 minutos.'],
+    productos:'Almidón de maíz (PT065), Queso chipa en polvo (PT062), Grasa vacuna (PT006), Condimentos varios'
+  },
+  {
+    id:12, cat:'REPOSTERÍA', emoji:'🍰',
+    title:'Cheesecake de Maracuyá',
+    desc:'Una combinación tropical irresistible: base crujiente de galletas, relleno cremoso de queso y la acidez refrescante del maracuyá. Sin horno para el relleno, fácil y elegante.',
+    tiempo:'4 hs (incluye frío)', porciones:'10 porciones', dificultad:'Media',
+    ingredientes:['Para la base: 200 g galletas de vainilla, 80 g manteca derretida','Para el relleno: 400 g queso crema, 200 ml crema de leche, 150 g azúcar impalpable, 12 g gelatina sin sabor, 150 ml pulpa de maracuyá','Para la cobertura: 100 ml pulpa de maracuyá, 50 g azúcar, 5 g gelatina'],
+    pasos:['Procesar las galletas hasta obtener migas finas. Mezclar con la manteca derretida.','Presionar sobre la base de un molde desmontable de 22 cm. Refrigerar 20 minutos.','Batir el queso crema con el azúcar impalpable hasta suave.','Incorporar la crema de leche batida a punto medio y la pulpa de maracuyá.','Disolver la gelatina en 3 cdas de agua caliente. Incorporar a la mezcla.','Volcar sobre la base y refrigerar 2 horas.','Preparar la cobertura: calentar la pulpa con azúcar, agregar gelatina disuelta, enfriar 10 min y volcar sobre el cheesecake.','Refrigerar 1 hora más antes de servir.'],
+    productos:'Azúcar impalpable (PT060), Esencia de vainilla (PT019), Galletas (base con productos Levapar), Gelatina sin sabor'
+  },
+];
+
+let currentFilter = 'TODOS';
+let currentRecipe = null;
+
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.fcat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRecipes();
+}
+
+function renderRecipes() {
+  const search = document.getElementById('searchBox').value.toLowerCase().trim();
+  let filtered = currentFilter === 'TODOS' ? RECETAS : RECETAS.filter(r => r.cat === currentFilter);
+  if (search) filtered = filtered.filter(r =>
+    r.title.toLowerCase().includes(search) ||
+    r.desc.toLowerCase().includes(search) ||
+    r.cat.toLowerCase().includes(search)
+  );
+
+  const count = document.getElementById('recipesCount');
+  count.innerHTML = `Mostrando <span>${filtered.length}</span> receta${filtered.length !== 1 ? 's' : ''}`;
+
+  const grid = document.getElementById('recipesGrid');
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="es-icon">🔍</div>
+      <p>No encontramos recetas para tu búsqueda.</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(r => `
+    <div class="recipe-card" onclick="openModal(${r.id})">
+      <div class="recipe-card-thumb">${r.emoji}</div>
+      <div class="recipe-card-body">
+        <span class="recipe-cat-badge">${r.cat}</span>
+        <div class="recipe-card-title">${r.title}</div>
+        <div class="recipe-card-desc">${r.desc.substring(0, 110)}...</div>
+        <div class="recipe-card-meta">
+          <span>⏱ ${r.tiempo}</span>
+          <span>👥 ${r.porciones}</span>
+          <span>⭐ ${r.dificultad}</span>
+        </div>
+        <button class="recipe-card-cta" onclick="event.stopPropagation();openModal(${r.id})">
+          Ver receta completa →
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openModal(id) {
+  const r = RECETAS.find(x => x.id === id);
+  if (!r) return;
+  currentRecipe = r;
+  document.getElementById('modalTitle').textContent = r.emoji + ' ' + r.title;
+  document.getElementById('modalThumb').textContent = r.emoji;
+  document.getElementById('modalDesc').textContent = r.desc;
+  document.getElementById('modalMeta').innerHTML = `
+    <div class="modal-meta-pill">⏱ <strong>${r.tiempo}</strong></div>
+    <div class="modal-meta-pill">👥 <strong>${r.porciones}</strong></div>
+    <div class="modal-meta-pill">⭐ Dificultad: <strong>${r.dificultad}</strong></div>
+  `;
+  document.getElementById('modalIngredients').innerHTML = r.ingredientes.map(i => `<li>${i}</li>`).join('');
+  document.getElementById('modalSteps').innerHTML = r.pasos.map(s => `<li>${s}</li>`).join('');
+  document.getElementById('modalProds').innerHTML = `<strong>🛒 Productos Levapar en esta receta:</strong> ${r.productos}`;
+  document.getElementById('recipeModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('recipeModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function pedirPorWA() {
+  if (!currentRecipe) return;
+  const msg = `Hola Levapar! 👋 Vi la receta de *${currentRecipe.title}* en su página y me interesa hacer un pedido de los siguientes productos:\n\n${currentRecipe.productos}\n\n¿Podrían informarme precios y disponibilidad? Gracias!`;
+  window.open(`https://wa.me/595976659277?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// Cerrar modal al hacer clic fuera
+document.getElementById('recipeModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Cerrar con Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+renderRecipes();
+</script>
+</body>
+</html>
