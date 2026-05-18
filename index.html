@@ -54,6 +54,7 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
 @media(max-width:768px){
   .header-nav-inline{display:none}
   .header-inner{flex-wrap:nowrap}
+  .cart-btn{display:none}
 }
 
 /* ── HERO ── */
@@ -274,6 +275,64 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
   .levapar-name{font-size:20px}
 }
 
+/* ── MOBILE HAMBURGER MENU ── */
+.hamburger-btn{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;border:none;background:rgba(255,255,255,.15);border-radius:8px;cursor:pointer;padding:8px;transition:background .2s;flex-shrink:0}
+.hamburger-btn:hover{background:rgba(255,255,255,.25)}
+.hamburger-btn span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s ease}
+.hamburger-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Overlay */
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:800;backdrop-filter:blur(2px)}
+.mobile-overlay.active{display:block}
+
+/* Sidebar drawer */
+.mobile-drawer{position:fixed;top:0;left:-100%;width:min(300px,85vw);height:100dvh;background:#0d2657;z-index:900;transition:left .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;box-shadow:6px 0 32px rgba(0,0,0,.4)}
+.mobile-drawer.open{left:0}
+
+/* Drawer header */
+.drawer-header{background:#cc0000;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.drawer-logo{display:flex;flex-direction:column;line-height:1}
+.drawer-logo-name{font-size:22px;font-weight:900;color:#fff;letter-spacing:1px}
+.drawer-logo-sub{font-size:9px;color:rgba(255,255,255,.75);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.drawer-close{background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:4px;opacity:.85;transition:opacity .2s}
+.drawer-close:hover{opacity:1}
+
+/* Nav items */
+.drawer-nav{flex:1;overflow-y:auto;padding:10px 0}
+.drawer-nav::-webkit-scrollbar{width:4px}
+.drawer-nav::-webkit-scrollbar-track{background:transparent}
+.drawer-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+
+.drawer-item{display:flex;align-items:center;gap:13px;padding:14px 20px;color:rgba(255,255,255,.85);text-decoration:none;font-size:14px;font-weight:600;letter-spacing:.3px;transition:all .18s;border-left:3px solid transparent;cursor:pointer;background:none;border-top:none;border-right:none;border-bottom:none;width:100%;text-align:left;font-family:inherit}
+.drawer-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:#cc0000}
+.drawer-item.active{background:rgba(204,0,0,.25);color:#fff;border-left-color:#cc0000}
+.drawer-item-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.drawer-item-label{flex:1}
+.drawer-item-arrow{font-size:11px;color:rgba(255,255,255,.5);transition:transform .2s}
+.drawer-item.submenu-open .drawer-item-arrow{transform:rotate(180deg)}
+
+/* Submenu */
+.drawer-submenu{display:none;background:rgba(0,0,0,.2);border-left:3px solid #cc0000;margin-left:0}
+.drawer-submenu.open{display:block}
+.drawer-subitem{display:flex;align-items:center;justify-content:space-between;padding:11px 20px 11px 57px;color:rgba(255,255,255,.7);text-decoration:none;font-size:12px;font-weight:600;transition:all .15s;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;width:100%;background:none;border-left:none;border-right:none;border-top:none;font-family:inherit;text-align:left}
+.drawer-subitem:last-child{border-bottom:none}
+.drawer-subitem:hover{color:#fff;background:rgba(255,255,255,.06)}
+.drawer-subitem-dot{width:7px;height:7px;border-radius:50%;background:#cc0000;flex-shrink:0}
+
+/* Drawer footer - carrito button */
+.drawer-footer{padding:16px 18px;border-top:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.drawer-cart-btn{width:100%;background:#cc0000;color:#fff;border:none;padding:13px 18px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s;font-family:inherit;letter-spacing:.3px}
+.drawer-cart-btn:hover{background:#aa0000}
+.drawer-cart-badge{background:#fff;color:#cc0000;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+
+.drawer-divider{height:1px;background:rgba(255,255,255,.08);margin:6px 18px}
+
+@media(max-width:768px){
+  .hamburger-btn{display:flex}
+}
+
 /* ── FAMILIES SECTION ── */
 .families-section{background:#fff;padding:48px 0;border-top:3px solid #eee}
 .families-section .section-title-row{display:flex;align-items:center;gap:14px;margin-bottom:28px}
@@ -379,10 +438,90 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
           🛒 Mi Pedido <span class="cart-badge" id="cartCount">0</span>
         </button>
 
+        <!-- HAMBURGER (mobile only) -->
+        <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleDrawer()" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
+
       </div>
     </div>
   </div>
 </header>
+
+<!-- MOBILE OVERLAY -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeDrawer()"></div>
+
+<!-- MOBILE DRAWER -->
+<nav class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <div class="drawer-logo">
+      <span class="drawer-logo-name">LEVAPAR</span>
+      <span class="drawer-logo-sub">Levaduras Paraguayas S.A.</span>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">×</button>
+  </div>
+
+  <div class="drawer-nav">
+    <!-- Inicio -->
+    <a class="drawer-item" href="#" onclick="closeDrawer()">
+      <span class="drawer-item-icon">🏠</span>
+      <span class="drawer-item-label">Inicio</span>
+    </a>
+
+    <div class="drawer-divider"></div>
+
+    <!-- Productos con submenu -->
+    <button class="drawer-item" id="drawerProdBtn" onclick="toggleDrawerSubmenu('drawerProdSub','drawerProdBtn')">
+      <span class="drawer-item-icon">🛍️</span>
+      <span class="drawer-item-label">Productos</span>
+      <span class="drawer-item-arrow">▾</span>
+    </button>
+    <div class="drawer-submenu" id="drawerProdSub">
+      <!-- populated by JS buildDrawerProducts() -->
+    </div>
+
+    <!-- Recetas -->
+    <a class="drawer-item" href="recetas.html" onclick="closeDrawer()">
+      <span class="drawer-item-icon">📖</span>
+      <span class="drawer-item-label">Recetas</span>
+    </a>
+
+    <!-- Recetas en página actual (scroll) -->
+    <a class="drawer-item" href="#recetas-section" onclick="closeDrawer()">
+      <span class="drawer-item-icon">🥐</span>
+      <span class="drawer-item-label">Ver Recetas aquí</span>
+    </a>
+
+    <div class="drawer-divider"></div>
+
+    <!-- Contacto -->
+    <a class="drawer-item" href="#contacto-footer" onclick="closeDrawer()">
+      <span class="drawer-item-icon">📞</span>
+      <span class="drawer-item-label">Contacto</span>
+    </a>
+
+    <!-- WhatsApp directo -->
+    <a class="drawer-item" href="https://wa.me/595981000000" target="_blank" onclick="closeDrawer()">
+      <span class="drawer-item-icon">💬</span>
+      <span class="drawer-item-label">WhatsApp</span>
+    </a>
+
+    <div class="drawer-divider"></div>
+
+    <!-- Cómo comprar -->
+    <a class="drawer-item" href="#como-comprar" onclick="closeDrawer()">
+      <span class="drawer-item-icon">❓</span>
+      <span class="drawer-item-label">¿Cómo comprar?</span>
+    </a>
+  </div>
+
+  <div class="drawer-footer">
+    <button class="drawer-cart-btn" onclick="closeDrawer();openCart()">
+      🛒 Mi Pedido
+      <span class="drawer-cart-badge" id="drawerCartCount">0</span>
+    </button>
+  </div>
+</nav>
 
 <!-- CARRITO MODAL -->
 <div id="cartModal" class="modal-overlay">
@@ -490,7 +629,7 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
   </div>
 </section>
 
-<section class="how-section">
+<section class="how-section" id="como-comprar">
   <div class="container">
     <p class="how-title">Guía de compra</p>
     <h2 class="how-subtitle">¿Cómo hacer tu preventa?</h2>
@@ -583,6 +722,14 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
              onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 9</span>'">
       </div>
 
+      <!-- ======================================= -->
+      <!-- LOGO 10 - reemplazá el src              -->
+      <!-- ======================================= -->
+      <div class="brand-chip">
+        <img src="pontevedrA.png" alt="Marca 9"
+             onerror="this.outerHTML='<span class=\'brand-chip-placeholder\'>LOGO 9</span>'">
+      </div>
+
     </div>
   </div>
 </div>
@@ -629,7 +776,7 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
           <!-- ========================================== -->
           <!-- 👇 REEMPLAZÁ LA URL DEL LOGO AQUÍ ABAJO  -->
           <!-- ========================================== -->
-          <img src="PEGA_AQUI_EL_LINK_DEL_LOGO.png"
+          <img src="LOGO LEVAPAR S.A. (blanco).png"
                alt="Levapar S.A."
                style="height:70px;object-fit:contain;filter:brightness(0) invert(1);"
                onerror="this.style.display='none';document.getElementById('footerLogoFallback').style.display='flex'">
@@ -701,7 +848,7 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
         <div class="footer-hours-item"><span class="fhi-day">Lunes – Viernes</span><span class="fhi-time">07:00 – 17:00</span></div>
         <div class="footer-hours-item"><span class="fhi-day">Sábados</span><span class="fhi-time">07:00 – 12:00</span></div>
         <div class="footer-hours-item" style="border:none"><span class="fhi-day">Domingos</span><span class="fhi-time" style="color:#555">Cerrado</span></div>
-        <div style="margin-top:16px;background:#1e1e1e;border-radius:8px;padding:12px 14px">
+        <div style="margin-top:16px;background:#ffffff;border-radius:8px;padding:12px 14px">
           <div style="font-size:11px;color:#cc0000;font-weight:700;margin-bottom:5px">📧 RECLAMOS</div>
           <a href="mailto:levapar@levapar.com" style="color:#ccc;font-size:12px;text-decoration:none;word-break:break-all">levapar@levapar.com</a>
         </div>
@@ -728,8 +875,6 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
 <script>
 const PRODUCTOS = [
   {code:'PT001',name:'Levadura fresca x 500 g',qty:13325,familia:'LEVADURAS',img:''},
-  {code:'PT002',name:'Levadura seca inactiva x kg',qty:60,familia:'LEVADURAS',img:''},
-  {code:'PT003',name:'Extracto de levadura liquida 11% x 23 kg',qty:18,familia:'ADITIVOS',img:''},
   {code:'PT006',name:'Grasa vacuna refinada x 10 kg',qty:47,familia:'GRASAS Y MARGARINAS',img:''},
   {code:'PT008',name:'Mejorador para masas multiproposito x 10 kg',qty:14,familia:'ADITIVOS',img:''},
   {code:'PT009',name:'Mejorador para masas multiproposito x 1 kg',qty:139,familia:'ADITIVOS',img:''},
@@ -774,8 +919,6 @@ const PRODUCTOS = [
   {code:'PT065',name:'Almidón de maíz x 1 kg',qty:29,familia:'ALMIDONES Y FECULAS',img:''},
   {code:'PT066',name:'Dulce de guayaba x 25 kg',qty:31,familia:'DULCES Y MERMELADAS',img:''},
   {code:'PT067',name:'Dulce de guayaba x 5 kg',qty:65,familia:'DULCES Y MERMELADAS',img:''},
-  {code:'PT068',name:'Dulce de leche x 10 kg',qty:0,familia:'DULCES Y MERMELADAS',img:''},
-  {code:'PT069',name:'Dulce de leche x 5 kg',qty:0,familia:'DULCES Y MERMELADAS',img:''},
   {code:'PT070',name:'Bicarbonato de sodio x 1 kg',qty:37,familia:'LEUDANTES QUIMICOS',img:''},
   {code:'PT071',name:'Fruta abrillantada tricolor x 10 kg',qty:19,familia:'FRUTA ABRILLANTADA',img:''},
   {code:'PT072',name:'Fruta abrillantada bicolor x 10 kg',qty:0,familia:'FRUTA ABRILLANTADA',img:''},
@@ -1334,9 +1477,87 @@ function onCiudadChange() {
   });
 }
 
+
+// ── MOBILE DRAWER ──
+function toggleDrawer() {
+  const drawer = document.getElementById('mobileDrawer');
+  const overlay = document.getElementById('mobileOverlay');
+  const btn = document.getElementById('hamburgerBtn');
+  const isOpen = drawer.classList.contains('open');
+  if (isOpen) {
+    closeDrawer();
+  } else {
+    drawer.classList.add('open');
+    overlay.classList.add('active');
+    btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    buildDrawerProducts();
+  }
+}
+
+function closeDrawer() {
+  document.getElementById('mobileDrawer').classList.remove('open');
+  document.getElementById('mobileOverlay').classList.remove('active');
+  document.getElementById('hamburgerBtn').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function toggleDrawerSubmenu(subId, btnId) {
+  const sub = document.getElementById(subId);
+  const btn = document.getElementById(btnId);
+  const isOpen = sub.classList.contains('open');
+  sub.classList.toggle('open', !isOpen);
+  btn.classList.toggle('submenu-open', !isOpen);
+}
+
+function buildDrawerProducts() {
+  const container = document.getElementById('drawerProdSub');
+  if (!container || container.childElementCount > 0) return;
+  // Get unique families from PRODUCTS
+  const families = {};
+  PRODUCTS.forEach(p => {
+    if (!families[p.familia]) families[p.familia] = 0;
+    families[p.familia]++;
+  });
+  const sorted = Object.entries(families).sort((a,b) => b[1]-a[1]);
+  sorted.forEach(([fam, count]) => {
+    const btn = document.createElement('button');
+    btn.className = 'drawer-subitem';
+    btn.innerHTML = `<span>${fam}</span><span class="drawer-subitem-dot"></span>`;
+    btn.onclick = () => {
+      setFilter(fam, null);
+      // activate the right filter button
+      document.querySelectorAll('.filter-btn').forEach(fb => {
+        fb.classList.toggle('active', fb.textContent.trim().toUpperCase() === fam.toUpperCase() ||
+          (fam === 'TODOS' && fb.textContent.trim() === 'Todos'));
+      });
+      closeDrawer();
+      setTimeout(() => {
+        const sec = document.getElementById('productsSection');
+        if (sec) sec.scrollIntoView({behavior:'smooth'});
+      }, 320);
+    };
+    container.appendChild(btn);
+  });
+}
+
+// Sync drawer cart badge with main cart badge
+const _origUpdateCart = typeof updateCartCount === 'function' ? updateCartCount : null;
+function syncDrawerBadge() {
+  const main = document.getElementById('cartCount');
+  const drawer = document.getElementById('drawerCartCount');
+  if (main && drawer) drawer.textContent = main.textContent;
+}
+// Observe cartCount changes
+const cartCountEl = document.getElementById('cartCount');
+if (cartCountEl && window.MutationObserver) {
+  new MutationObserver(syncDrawerBadge).observe(cartCountEl, {childList:true,characterData:true,subtree:true});
+}
+
 renderProducts();
 buildDropdown();
 </script>
 </body>
 </html>
+
 
