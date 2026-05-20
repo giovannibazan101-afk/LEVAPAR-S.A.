@@ -396,9 +396,51 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
 .recipe-steps-list li::before{content:counter(steps);position:absolute;left:0;top:7px;width:18px;height:18px;background:#cc0000;color:#fff;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .recipe-prods-note{background:#fff5f5;border:1px solid #ffcccc;border-radius:7px;padding:12px 14px;margin-top:14px;font-size:12px;color:#cc0000}
 .recipe-prods-note strong{font-weight:700}
+
+/* ── LOGIN OVERLAY ── */
+#login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#cc0000 0%,#7a0000 100%);z-index:9999;display:flex;align-items:center;justify-content:center;}
+#login-overlay::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.login-card{background:#fff;border-radius:18px;padding:40px 36px;width:100%;max-width:380px;box-shadow:0 24px 60px rgba(0,0,0,.35);position:relative;z-index:1;}
+.login-logo{text-align:center;margin-bottom:28px;}
+.login-logo img{height:48px;object-fit:contain;}
+.login-title{text-align:center;font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:4px;}
+.login-sub{text-align:center;font-size:12px;color:#888;margin-bottom:28px;}
+.login-field{margin-bottom:16px;}
+.login-field label{display:block;font-size:12px;font-weight:700;color:#444;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.login-field input{width:100%;padding:11px 14px;border:2px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color .2s;}
+.login-field input:focus{border-color:#cc0000;}
+.login-btn{width:100%;padding:13px;background:#cc0000;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;margin-top:8px;}
+.login-btn:hover{background:#aa0000;}
+.login-err{background:#fff0f0;border:1.5px solid #ffb3b3;color:#cc0000;border-radius:7px;padding:9px 12px;font-size:12px;font-weight:600;text-align:center;display:none;margin-top:12px;}
+
 </style>
 </head>
 <body>
+
+<div id="login-overlay">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg width="120" height="36" viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="36" rx="8" fill="#cc0000"/>
+        <text x="60" y="24" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">LEVAPAR S.A.</text>
+      </svg>
+    </div>
+    <div class="login-title">Bienvenido 👋</div>
+    <div class="login-sub">Ingresá tus credenciales para continuar</div>
+    <div class="login-field">
+      <label>Usuario</label>
+      <input type="text" id="lg-user" placeholder="Nombre de usuario" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <div class="login-field">
+      <label>Contraseña</label>
+      <input type="password" id="lg-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="login-btn" onclick="doLogin()">Ingresar →</button>
+    <div class="login-err" id="lg-err">❌ Usuario o contraseña incorrectos</div>
+  </div>
+</div>
+
+
 
 <!-- HEADER -->
 <header>
@@ -575,7 +617,7 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
         <!-- CIUDAD -->
         <div class="co-field">
           <label>Ciudad / Distrito *</label>
-          <select id="co_ciudad" class="co-select" onchange="onCiudadChange()" disabled>
+          <select id="co_ciudad" class="co-select" onchange="onCiudadChange(); actualizarZonaInfo();" disabled>
             <option value="">— Primero elegí el departamento —</option>
           </select>
         </div>
@@ -586,6 +628,14 @@ header{background:#cc0000;position:sticky;top:0;z-index:200;box-shadow:0 3px 12p
           <select id="co_barrio" class="co-select" disabled>
             <option value="">— Primero elegí la ciudad —</option>
           </select>
+        </div>
+        <!-- ZONA INFO -->
+        <div id="zona_info_box" style="display:none;align-items:center;gap:12px;background:#f0fff4;border:2px solid #25d366;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px;">
+          <span style="font-size:22px;">📍</span>
+          <div>
+            <div style="font-weight:700;color:#1a7a3a;">Zona asignada: <span id="zona_nombre" style="background:#25d366;color:#fff;padding:2px 10px;border-radius:12px;margin-left:4px;">—</span></div>
+            <div style="color:#555;font-size:11px;margin-top:2px;">Vendedor responsable: <strong id="zona_vendedor">—</strong></div>
+          </div>
         </div>
 
         <div class="co-field"><label>Dirección / Calle *</label><input type="text" id="co_direccion" placeholder="Av. España 1234"></div>
@@ -1160,6 +1210,17 @@ function enviarWhatsApp() {
   let err=false;
   req.forEach(r=>{document.getElementById(r.id).classList.toggle('err',!r.val);if(!r.val)err=true;});
   if(err){alert('Completá todos los campos obligatorios (*)');return;}
+
+  // ── ZONA ROUTING ──
+  const zonaData = detectarZona(ciudad, barrio);
+  const waTarget = zonaData ? zonaData.wa : null;
+  if (!waTarget) {
+    alert('⚠️ No encontramos un encargado para tu zona (' + ciudad + '). Por favor contactá al equipo general.');
+    return;
+  }
+  const zonaId = zonaData.zona;
+  const vendedorNombre = zonaData.vendedor;
+
   let msg='🏭 *PREVENTA LEVAPAR S.A.*\n\n';
   msg+='📦 *ARTÍCULOS SOLICITADOS:*\n';
   cart.forEach(i=>msg+=`  • [${i.code}] ${i.name}\n    Cantidad: ${i.qty} unidad(es)\n\n`);
@@ -1175,9 +1236,15 @@ function enviarWhatsApp() {
   if(ref)msg+=`  Referencia: ${ref}\n`;
   const lat=document.getElementById('co_lat').value,lng=document.getElementById('co_lng').value;
   if(lat&&lng)msg+=`\n📍 Ubicación: https://www.google.com/maps?q=${lat},${lng}\n`;
+  msg+=`\n🗺️ *ZONA: ${zonaId}* | Vendedor: ${vendedorNombre}\n`;
   if(obs)msg+=`\n💬 Obs.: ${obs}\n`;
   msg+='\n¡Gracias por tu preventa! 😊';
-  window.open(`https://wa.me/595976659277?text=${encodeURIComponent(msg)}`, '_blank');
+
+  // Extract phone number from WA url and open
+  const phoneMatch = waTarget.match(/phone=(\d+)/);
+  const phone = phoneMatch ? phoneMatch[1] : '';
+  const waUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}` : `${waTarget}&text=${encodeURIComponent(msg)}`;
+  window.open(waUrl, '_blank');
 }
 
 window.onclick=e=>{
@@ -1557,7 +1624,5 @@ if (cartCountEl && window.MutationObserver) {
 renderProducts();
 buildDropdown();
 </script>
-</body>
-</html>
-
-
+<script>
+const ZONA_BARRIOS=[{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"SAJONIA","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"SAN ANTONIO","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"DR. GASPAR RODRIGUEZ DE FRANCIA","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"ITA PYTA PUNTA","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"LA ENCARNACION","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"TACUMBU","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"JUKYTY","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"LA CATEDRAL","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"GENERAL JOSE EDUVIGIS DIAZ","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"OBRERO INTENDENTE B. GUGGIARI","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"ROBERTO L. PETIT","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"RICARDO BRUGADA","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"SAN ROQUE","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"TTE. SILVIO PETTIROSSI","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"SAN VICENTE","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCIÓN","dist":"ASUNCIÓN","barrio":"PINOZA","zona":"ZV01","wa":"https://api.whatsapp.com/send/?phone=595972107261","v":"FRANCISCO CARDOZO"},{"dep":"ASUNCI
